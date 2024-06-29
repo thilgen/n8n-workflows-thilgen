@@ -1,37 +1,37 @@
 {
-  "name": "Workflow 1 - Native Nodes, Code Node, and Email",
+  "name": "My workflow",
   "nodes": [
     {
       "parameters": {},
-      "id": "c7079015-6540-48f9-89e1-de1f849eef96",
+      "id": "32258d98-9763-4dd3-8928-8a6dd2915965",
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        160,
-        160
+        -40,
+        400
       ]
     },
     {
       "parameters": {},
-      "id": "b9299b7a-0658-49f0-9bc7-77e03ed94dd1",
+      "id": "41261275-96b5-452a-a08e-d67c3543d055",
       "name": "Cabeza",
       "type": "CUSTOM.cabeza",
       "typeVersion": 1,
       "position": [
-        460,
-        160
+        240,
+        300
       ]
     },
     {
       "parameters": {},
-      "id": "6b00bdd0-857e-403e-aa92-d7d7cff771eb",
+      "id": "d1f9e418-d693-4556-97a5-eecc5b45ad77",
       "name": "Cola",
       "type": "CUSTOM.cola",
       "typeVersion": 1,
       "position": [
-        460,
-        340
+        240,
+        500
       ]
     },
     {
@@ -42,49 +42,83 @@
         "html": "=The first item in the set was {{ $json.head }} and the last item was {{ $json.tail }}",
         "options": {}
       },
-      "id": "1e410cce-f9f8-4d71-97f5-52a1dcc4a76f",
+      "id": "dfd45a7b-e926-4bbb-9e81-4a90f1d0f5c4",
       "name": "Send Email",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        700,
-        480
+        900,
+        400
       ],
       "credentials": {
         "smtp": {
-          "id": "5YaEgMRBRvBS55li",
+          "id": "vxN5Ul2oKn5zlmdB",
           "name": "SMTP account"
         }
       }
     },
     {
       "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "return {\n  \"head\": $('Cabeza').first().json,\n  \"tail\": $('Cola').first().json\n};"
+        "jsCode": "return {\n  \"head\": $('Cabeza').first().json.name,\n  \"tail\": $('Cola').first().json.name\n};"
       },
-      "id": "2847d9bc-b904-495c-af65-88c6472b8183",
+      "id": "1632a71c-eb34-434e-8a0d-37a94e0f7a3f",
       "name": "Code",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         700,
-        240
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## I'm a RED note \n\nThe text in double asterisks will be **bold**\n\nThe text in single asterisks will be *italic*\n\n# This is a top-level heading\n## This is a sub-heading\n### This is a smaller sub-heading\n\nYou can add links:\n[Example](https://example.com/)\n\nCreate lists with asterisks:\n* Item one\n* Item two\n\n\nOr created ordered lists with numbers:\n1. Item one\n2. Item two\n",
+        "height": 562.4075666380055,
+        "width": 621.3585554600172,
+        "color": 3
+      },
+      "id": "40229228-cdf3-45c2-b4c1-03e0bd12ed84",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "27827415-0c33-4f82-a217-8b3c2ca4f73d",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        500,
+        400
       ]
     }
   ],
   "pinData": {
     "When clicking ‘Test workflow’": [
       {
-        "json": "apple"
+        "json": {
+          "name": "apple"
+        }
       },
       {
-        "json": "oranges"
+        "json": {
+          "name": "oranges"
+        }
       },
       {
-        "json": "cherry"
+        "json": {
+          "name": "cherry"
+        }
       },
       {
-        "json": "pear"
+        "json": {
+          "name": "pear"
+        }
       }
     ]
   },
@@ -93,7 +127,7 @@
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -120,9 +154,9 @@
       "main": [
         [
           {
-            "node": "Code",
+            "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -137,17 +171,28 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "69490478-5575-4a1f-8086-968b5069f0dd",
+  "versionId": "6a571255-e074-43bb-a1cd-2549ec538151",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "65cdf035609cc7c18eb0a8191053bb72f33e775f1b530f4b1345364823cae35b"
+    "instanceId": "7e46e3d74ef535504c2ed3bf3c199864059cf9aca443d36449a213f995cc967d"
   },
-  "id": "lipl80OxkkxgFDzm",
+  "id": "spZlQA0FKV5Szdpr",
   "tags": []
 }
