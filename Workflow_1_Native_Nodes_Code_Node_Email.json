@@ -1,0 +1,153 @@
+{
+  "name": "Workflow 1 - Native Nodes, Code Node, and Email",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c7079015-6540-48f9-89e1-de1f849eef96",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        160
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b9299b7a-0658-49f0-9bc7-77e03ed94dd1",
+      "name": "Cabeza",
+      "type": "CUSTOM.cabeza",
+      "typeVersion": 1,
+      "position": [
+        460,
+        160
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6b00bdd0-857e-403e-aa92-d7d7cff771eb",
+      "name": "Cola",
+      "type": "CUSTOM.cola",
+      "typeVersion": 1,
+      "position": [
+        460,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Tony.Stark@avengers.com",
+        "toEmail": "Roth.Basset@outlook.com",
+        "subject": "test email",
+        "html": "=The first item in the set was {{ $json.head }} and the last item was {{ $json.tail }}",
+        "options": {}
+      },
+      "id": "1e410cce-f9f8-4d71-97f5-52a1dcc4a76f",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        480
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "5YaEgMRBRvBS55li",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  \"head\": $('Cabeza').first().json,\n  \"tail\": $('Cola').first().json\n};"
+      },
+      "id": "2847d9bc-b904-495c-af65-88c6472b8183",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        240
+      ]
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Test workflow’": [
+      {
+        "json": "apple"
+      },
+      {
+        "json": "oranges"
+      },
+      {
+        "json": "cherry"
+      },
+      {
+        "json": "pear"
+      }
+    ]
+  },
+  "connections": {
+    "Cabeza": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Cabeza",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Cola",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cola": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "69490478-5575-4a1f-8086-968b5069f0dd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "65cdf035609cc7c18eb0a8191053bb72f33e775f1b530f4b1345364823cae35b"
+  },
+  "id": "lipl80OxkkxgFDzm",
+  "tags": []
+}
